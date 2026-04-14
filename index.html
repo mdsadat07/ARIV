@@ -424,51 +424,99 @@
 
   .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.2rem;
     margin-top: 3rem;
   }
 
   .service-card {
-    background: var(--dark);
-    padding: 2.2rem;
+    background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 16px;
+    padding: 2rem 2rem 1.8rem;
     position: relative;
-    transition: background .25s;
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
     overflow: hidden;
+    backdrop-filter: blur(8px);
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent);
+    opacity: 0;
+    transition: opacity .3s;
   }
 
   .service-card::after {
     content: '';
     position: absolute;
-    bottom: 0; left: 0;
-    width: 0; height: 2px;
-    background: var(--gold);
-    transition: width .3s;
+    inset: 0;
+    border-radius: 16px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity .3s;
+    pointer-events: none;
   }
 
-  .service-card:hover { background: #161616; }
-  .service-card:hover::after { width: 100%; }
+  .service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(201,168,76,0.25);
+    border-color: rgba(201,168,76,0.35);
+  }
 
-  .service-icon {
-    font-size: 1.6rem;
-    margin-bottom: 1.2rem;
-    display: block;
+  .service-card:hover::before { opacity: 1; }
+  .service-card:hover::after  { opacity: 1; }
+
+  html.light .service-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.6) 100%);
+    border-color: rgba(140,100,20,0.15);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+
+  html.light .service-card:hover {
+    box-shadow: 0 20px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(140,100,20,0.25);
+  }
+
+  .service-icon-wrap {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(201,168,76,0.18), rgba(201,168,76,0.06));
+    border: 1px solid rgba(201,168,76,0.25);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.3rem;
+    transition: background .3s, transform .3s;
+  }
+
+  .service-card:hover .service-icon-wrap {
+    background: linear-gradient(135deg, rgba(201,168,76,0.3), rgba(201,168,76,0.12));
+    transform: scale(1.08);
+  }
+
+  .service-icon-wrap svg {
+    width: 22px; height: 22px;
+    stroke: var(--gold);
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
   .service-name {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem;
+    font-size: 1.35rem;
     letter-spacing: 0.05em;
-    margin-bottom: .6rem;
+    margin-bottom: .55rem;
+    color: var(--white);
   }
 
   .service-desc {
-    font-size: 0.88rem;
-    color: #888;
-    line-height: 1.6;
-    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-bottom: 1.2rem;
   }
 
   .service-routes {
@@ -478,12 +526,17 @@
 
   .service-routes li {
     font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
+    font-size: 0.67rem;
     letter-spacing: 0.06em;
     color: var(--gold);
-    border: 1px solid rgba(201,168,76,0.3);
-    padding: .2rem .55rem;
+    background: rgba(201,168,76,0.07);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 999px;
+    padding: .2rem .7rem;
+    transition: background .2s;
   }
+
+  .service-routes li:hover { background: rgba(201,168,76,0.15); }
 
   /* ── WHY ── */
   #why { background: var(--black); }
@@ -491,31 +544,70 @@
   .why-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2.5rem;
+    gap: 1.2rem;
     margin-top: 3rem;
   }
 
-  .why-item { }
+  .why-item {
+    background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px;
+    padding: 1.8rem;
+    transition: border-color .3s, transform .3s, box-shadow .3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .why-item:hover {
+    border-color: rgba(201,168,76,0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+  }
+
+  html.light .why-item {
+    background: rgba(255,255,255,0.7);
+    border-color: rgba(0,0,0,0.08);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+
+  html.light .why-item:hover {
+    border-color: rgba(140,100,20,0.25);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+  }
+
+  .why-icon-wrap {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.04));
+    border: 1px solid rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.1rem;
+  }
+
+  .why-icon-wrap svg {
+    width: 19px; height: 19px;
+    stroke: var(--gold);
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
 
   .why-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 3rem;
-    color: rgba(201,168,76,0.18);
-    line-height: 1;
-    margin-bottom: .5rem;
+    display: none;
   }
 
   .why-title {
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
     margin-bottom: .4rem;
     color: var(--white);
   }
 
   .why-text {
-    font-size: 0.86rem;
-    color: #777;
-    line-height: 1.6;
+    font-size: 0.84rem;
+    color: var(--text-muted);
+    line-height: 1.65;
   }
 
   /* ── PRICING ── */
@@ -822,7 +914,9 @@
     <div class="services-grid reveal">
 
       <div class="service-card">
-        <span class="service-icon">✈️</span>
+        <div class="service-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M22 16.5H2M5 16.5V19M19 16.5V19M3.5 8l2-4h13l2 4M8 8v3M16 8v3"/><circle cx="7" cy="16.5" r="1.5"/><circle cx="17" cy="16.5" r="1.5"/><path d="M2 11h20v5.5H2z"/></svg>
+        </div>
         <div class="service-name">Airport Transfers</div>
         <p class="service-desc">Stress-free door-to-door airport service with real-time flight tracking so we're always on time.</p>
         <ul class="service-routes">
@@ -832,7 +926,9 @@
       </div>
 
       <div class="service-card">
-        <span class="service-icon">🚐</span>
+        <div class="service-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 1 0 20M12 2a14.5 14.5 0 0 0 0 20"/></svg>
+        </div>
         <div class="service-name">Regular Shuttles</div>
         <p class="service-desc">Affordable, reliable rides to nearby communities — perfect for daily travel and family visits.</p>
         <ul class="service-routes">
@@ -847,7 +943,9 @@
       </div>
 
       <div class="service-card">
-        <span class="service-icon">🛣️</span>
+        <div class="service-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M3 17l3-10h12l3 10H3z"/><path d="M3 17v2h18v-2"/><circle cx="7.5" cy="17" r="1.5"/><circle cx="16.5" cy="17" r="1.5"/><path d="M9 7v6M12 7v6M15 7v6"/></svg>
+        </div>
         <div class="service-name">Premium Long-Distance</div>
         <p class="service-desc">Flat-rate private rides for extended travel — business trips, weekend getaways, and group bookings.</p>
         <ul class="service-routes">
@@ -861,8 +959,10 @@
       </div>
 
       <div class="service-card">
-        <span class="service-icon">💼</span>
-        <div class="service-name">Corporate & VIP</div>
+        <div class="service-icon-wrap">
+          <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+        </div>
+        <div class="service-name">Corporate &amp; VIP</div>
         <p class="service-desc">Executive transport, conference shuttles, and government contract services. Professional every time.</p>
         <ul class="service-routes">
           <li>Daily/Weekly Plans</li>
@@ -872,7 +972,9 @@
       </div>
 
       <div class="service-card">
-        <span class="service-icon">🪖</span>
+        <div class="service-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M12 2L8 7H4l2 5-4 3 4 1 1 4 5-2 5 2 1-4 4-1-4-3 2-5h-4z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
         <div class="service-name">Military Services</div>
         <p class="service-desc">Dedicated transport for Canadian Armed Forces members — deployments, leave travel, family relocation, and training groups.</p>
         <ul class="service-routes">
@@ -884,8 +986,10 @@
       </div>
 
       <div class="service-card">
-        <span class="service-icon">🏔️</span>
-        <div class="service-name">Tourism & Custom Trips</div>
+        <div class="service-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M3 17l4-8 4 4 3-6 4 10"/><circle cx="8" cy="6" r="2"/><path d="M21 17H3"/></svg>
+        </div>
+        <div class="service-name">Tourism &amp; Custom Trips</div>
         <p class="service-desc">Day tours, scenic routes, and fully customized road trips. Explore on your terms.</p>
         <ul class="service-routes">
           <li>Mont-Tremblant</li>
@@ -907,32 +1011,44 @@
     <h2 class="section-title reveal">Every Ride,<br>Done Right</h2>
     <div class="why-grid">
       <div class="why-item reveal">
-        <div class="why-num">01</div>
+        <div class="why-icon-wrap">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
         <div class="why-title">Truly Private</div>
         <div class="why-text">No ride-sharing, no strangers. Your vehicle is booked exclusively for you and your group.</div>
       </div>
       <div class="why-item reveal">
-        <div class="why-num">02</div>
+        <div class="why-icon-wrap">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
         <div class="why-title">Punctual</div>
         <div class="why-text">We track flights, monitor traffic, and plan around your schedule — not the other way around.</div>
       </div>
       <div class="why-item reveal">
-        <div class="why-num">03</div>
+        <div class="why-icon-wrap">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
         <div class="why-title">Transparent Pricing</div>
         <div class="why-text">Flat rates confirmed at booking. No surge pricing, no hidden fees, no surprises.</div>
       </div>
       <div class="why-item reveal">
-        <div class="why-num">04</div>
+        <div class="why-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10"/><path d="M22 2L12 12"/><path d="M16 2h6v6"/></svg>
+        </div>
         <div class="why-title">Flexible</div>
         <div class="why-text">Subscriptions, one-off trips, last-minute bookings — we adapt to what you need.</div>
       </div>
       <div class="why-item reveal">
-        <div class="why-num">05</div>
+        <div class="why-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
         <div class="why-title">Clean Vehicles</div>
         <div class="why-text">Well-maintained, spacious rides for up to 8 passengers. Comfort is standard, not optional.</div>
       </div>
       <div class="why-item reveal">
-        <div class="why-num">06</div>
+        <div class="why-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
         <div class="why-title">Family Service</div>
         <div class="why-text">Locally operated with a personal touch. Every customer is treated with care and respect.</div>
       </div>
